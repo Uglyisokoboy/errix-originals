@@ -259,6 +259,10 @@ app.get('/api/test', (req, res) => {
   });
 });
 
+app.get('/', (req, res) => {
+  res.send('Errix Originals API is running! Try /api/products or /api/campaigns');
+});
+
 // Start server
 const PORT = 3000;
 app.listen(PORT, () => {
