@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard - Errix Originals</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #000000 0%, #1a1a1a 50%, #000000 100%);
+      min-height: 100vh;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    /* Modern Header */
+    .header {
+      background: rgba(255, 255, 255, 0.1);
+      -webkit-backdrop-filter: blur(20px);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 1.5rem 0;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .header-content {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .brand-icon {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, #000, #333);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.2rem;
+    }
+
+    .brand-text h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 0.2rem;
+    }
+
+    .brand-text p {
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.8);
+      font-weight: 400;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .logout-btn {
+      background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .logout-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 15px rgba(255, 107, 107, 0.3);
+    }
+
+    /* Main Container */
+    .main-container {
+      max-width: 1400px;
+      margin: 2rem auto;
+      padding: 0 2rem;
+    }
+
+    .page-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .page-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 1rem;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    }
+
+    .page-subtitle {
+      font-size: 1.1rem;
+      color: rgba(255, 255, 255, 0.9);
+      font-weight: 400;
+    }
+
+    /* Stats Cards */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+
+    .stat-card {
+      background: rgba(255, 255, 255, 0.1);
+      -webkit-backdrop-filter: blur(20px);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 16px;
+      padding: 2rem;
+      text-align: center;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #000, #333, #000);
+    }
+
+    .stat-card:hover {
+      transform: translateY(-5px);
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .stat-icon {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, #000, #333);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1rem;
+      color: white;
+      font-size: 1.5rem;
+    }
+
+    .stat-number {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-label {
+      font-size: 1rem;
+      color: rgba(255, 255, 255, 0.8);
+      font-weight: 500;
+    }
+
+    /* Navigation Cards */
+    .nav-section {
+      background: rgba(255, 255, 255, 0.95);
+      -webkit-backdrop-filter: blur(20px);
+      backdrop-filter: blur(20px);
+      border-radius: 24px;
+      padding: 2rem;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      margin-bottom: 3rem;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 2px solid rgba(0,0,0,0.1);
+    }
+
+    .section-title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #333;
+    }
+
+    .nav-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .nav-card {
+      background: white;
+      border-radius: 16px;
+      padding: 2rem;
+      text-align: center;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+      border: 1px solid rgba(0,0,0,0.05);
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .nav-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+    }
+
+    .nav-icon {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, #000, #333);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.5rem;
+      color: white;
+      font-size: 2rem;
+    }
+
+    .nav-title {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 0.5rem;
+    }
+
+    .nav-description {
+      font-size: 0.9rem;
+      color: #666;
+      line-height: 1.5;
+    }
+
+    /* Orders Section */
+    .orders-section {
+      background: rgba(255, 255, 255, 0.95);
+      -webkit-backdrop-filter: blur(20px);
+      backdrop-filter: blur(20px);
+      border-radius: 24px;
+      padding: 2rem;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .orders-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+    }
+
+    .orders-table th {
+      background: linear-gradient(135deg, #000, #333);
+      color: white;
+      padding: 1rem;
+      text-align: left;
+      font-weight: 600;
+      border-radius: 8px 8px 0 0;
+    }
+
+    .orders-table td {
+      padding: 1rem;
+      border-bottom: 1px solid #eee;
+      color: #333;
+    }
+
+    .orders-table tr:hover {
+      background: rgba(0,0,0,0.02);
+    }
+
+    .status-badge {
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .status-pending {
+      background: #fff3cd;
+      color: #856404;
+    }
+
+    .status-completed {
+      background: #d4edda;
+      color: #155724;
+    }
+
+    .status-failed {
+      background: #f8d7da;
+      color: #721c24;
+    }
+
+    /* Loading Animation */
+    .loading {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      color: #666;
+    }
+
+    .loading::after {
+      content: '';
+      width: 20px;
+      height: 20px;
+      border: 2px solid #ddd;
+      border-top: 2px solid #000;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin-left: 0.5rem;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .header-content {
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .nav-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .page-title {
+        font-size: 2rem;
+      }
+
+      .orders-table {
+        font-size: 0.9rem;
+      }
+
+      .orders-table th,
+      .orders-table td {
+        padding: 0.75rem 0.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="header-content">
+      <div class="brand">
+        <div class="brand-icon">
+          <i class="fas fa-shoe-prints"></i>
+        </div>
+        <div class="brand-text">
+          <h1>Errix Originals</h1>
+          <p>Admin Dashboard</p>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button class="logout-btn" onclick="logout()">
+          <i class="fas fa-sign-out-alt"></i>
+          Logout
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <div class="main-container">
+    <!-- Page Header -->
+    <div class="page-header">
+      <h1 class="page-title">Business Overview</h1>
+      <p class="page-subtitle">Monitor your store performance and manage operations</p>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon">
+          <i class="fas fa-box"></i>
+        </div>
+        <div class="stat-number" id="totalProducts">0</div>
+        <div class="stat-label">Total Products</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">
+          <i class="fas fa-shopping-cart"></i>
+        </div>
+        <div class="stat-number" id="totalOrders">0</div>
+        <div class="stat-label">Total Orders</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">
+          <i class="fas fa-heart"></i>
+        </div>
+        <div class="stat-number" id="totalDonations">₦0</div>
+        <div class="stat-label">Total Donations</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">
+          <i class="fas fa-chart-line"></i>
+        </div>
+        <div class="stat-number" id="totalRevenue">₦0</div>
+        <div class="stat-label">Total Revenue</div>
+      </div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="nav-section">
+      <div class="section-header">
+        <h2 class="section-title">Quick Actions</h2>
+      </div>
+      <div class="nav-grid">
+        <a href="add-product.html" class="nav-card">
+          <div class="nav-icon">
+            <i class="fas fa-plus"></i>
+          </div>
+          <div class="nav-title">Add Product</div>
+          <div class="nav-description">Create new products for your store</div>
+        </a>
+        <a href="edit-products.html" class="nav-card">
+          <div class="nav-icon">
+            <i class="fas fa-edit"></i>
+          </div>
+          <div class="nav-title">Manage Products</div>
+          <div class="nav-description">Edit or delete existing products</div>
+        </a>
+        <a href="products.html" class="nav-card">
+          <div class="nav-icon">
+            <i class="fas fa-eye"></i>
+          </div>
+          <div class="nav-title">View Products</div>
+          <div class="nav-description">Browse your product catalog</div>
+        </a>
+        <a href="my-account.html" class="nav-card">
+          <div class="nav-icon">
+            <i class="fas fa-user"></i>
+          </div>
+          <div class="nav-title">My Account</div>
+          <div class="nav-description">Manage your account settings</div>
+        </a>
+      </div>
+    </div>
+
+    <!-- Recent Orders -->
+    <div class="orders-section">
+      <div class="section-header">
+        <h2 class="section-title">Recent Orders</h2>
+      </div>
+      <div class="loading" id="ordersLoading">Loading orders...</div>
+      <table class="orders-table" id="ordersTable" style="display: none;">
+        <thead>
+          <tr>
+            <th>Customer</th>
+            <th>Product</th>
+            <th>Amount</th>
+            <th>Donation</th>
+            <th>Status</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody id="ordersTableBody">
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    // Redirect to login if not logged in
+    if (!localStorage.getItem('adminLoggedIn')) {
+      window.location.href = 'my-account.html';
+    }
+
+    function logout() {
+      localStorage.removeItem('adminLoggedIn');
+      window.location.href = 'my-account.html';
+    }
+
+    // Fetch stats and orders
+    async function loadDashboard() {
+      try {
+        // Products
+        const productsRes = await fetch('http://localhost:3000/api/products');
+        const products = await productsRes.json();
+        document.getElementById('totalProducts').textContent = products.length;
+
+        // Calculate total value
+        const totalValue = products.reduce((sum, p) => sum + p.price, 0);
+        document.getElementById('totalRevenue').textContent = '₦' + totalValue.toLocaleString();
+
+        // Orders
+        try {
+          const ordersRes = await fetch('http://localhost:3000/api/orders');
+          const orders = await ordersRes.json();
+          document.getElementById('totalOrders').textContent = orders.length;
+
+          // Donations
+          let totalDonations = 0;
+          orders.forEach(o => { totalDonations += Number(o.donation || 0); });
+          document.getElementById('totalDonations').textContent = '₦' + totalDonations.toLocaleString();
+
+          // Recent Orders
+          const tbody = document.getElementById('ordersTableBody');
+          const loading = document.getElementById('ordersLoading');
+          const table = document.getElementById('ordersTable');
+
+          tbody.innerHTML = '';
+          
+          if (orders.length > 0) {
+            orders.slice(0, 10).forEach(order => {
+              const tr = document.createElement('tr');
+              const status = order.payment_status || 'pending';
+              const statusClass = status === 'completed' ? 'status-completed' : 
+                                status === 'failed' ? 'status-failed' : 'status-pending';
+              
+              tr.innerHTML = `
+                <td>${order.customer_name || 'N/A'}</td>
+                <td>${order.shoe || 'N/A'}</td>
+                <td>₦${(Number(order.donation || 0) + 50).toLocaleString()}</td>
+                <td>₦${Number(order.donation || 0).toLocaleString()}</td>
+                <td><span class="status-badge ${statusClass}">${status}</span></td>
+                <td>${new Date(order.created_at || Date.now()).toLocaleDateString()}</td>
+              `;
+              tbody.appendChild(tr);
+            });
+          } else {
+            tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; color:#888; padding: 2rem;">No orders yet.</td></tr>';
+          }
+
+          loading.style.display = 'none';
+          table.style.display = 'table';
+        } catch (error) {
+          console.log('No orders endpoint available');
+          document.getElementById('totalOrders').textContent = '0';
+          document.getElementById('totalDonations').textContent = '₦0';
+          
+          const loading = document.getElementById('ordersLoading');
+          const table = document.getElementById('ordersTable');
+          loading.innerHTML = 'No orders data available';
+          table.style.display = 'none';
+        }
+      } catch (error) {
+        console.error('Error loading dashboard:', error);
+      }
+    }
+
+    // Initialize
+    loadDashboard();
+  </script>
+</body>
+</html> 

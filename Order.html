@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Order - Errix_Originals</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: linear-gradient(135deg, #000000 0%, #1a1a1a 50%, #000000 100%);
+      color: #ffffff;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Modern Header */
+    header {
+      background: rgba(0, 0, 0, 0.95);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      padding: 1.5rem 0;
+      transition: all 0.3s ease;
+    }
+
+    .header-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #ffffff;
+      text-decoration: none;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .logo span {
+      color: rgba(255, 255, 255, 0.7);
+      font-weight: 300;
+    }
+
+    /* Modern Navigation */
+    nav {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: rgba(255, 255, 255, 0.8);
+      font-weight: 500;
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 0.75rem 1.5rem;
+      border-radius: 25px;
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      position: relative;
+      overflow: hidden;
+    }
+
+    nav a::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+      transition: left 0.5s;
+    }
+
+    nav a:hover::before {
+      left: 100%;
+    }
+
+    nav a:hover {
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateY(-2px);
+    }
+
+    .account-link {
+      background: linear-gradient(135deg, #ffffff 0%, #f8f8f8 100%);
+      color: #000000 !important;
+      font-weight: 600;
+    }
+
+    .account-link:hover {
+      background: linear-gradient(135deg, #f8f8f8 0%, #ffffff 100%);
+      transform: translateY(-2px) scale(1.05);
+    }
+
+    /* Hero Section */
+    .hero {
+      background: linear-gradient(135deg, #000000 0%, #1a1a1a 50%, #000000 100%);
+      min-height: 50vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      padding: 8rem 2rem 4rem;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="rgba(255,255,255,0.02)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+      opacity: 0.3;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 800px;
+    }
+
+    .hero h1 {
+      font-size: 3.5rem;
+      font-weight: 300;
+      margin-bottom: 1.5rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      background: linear-gradient(135deg, #ffffff 0%, rgba(255,255,255,0.8) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: fadeInUp 1.5s ease-out;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      max-width: 600px;
+      margin: 0 auto 2rem;
+      color: rgba(255, 255, 255, 0.9);
+      line-height: 1.8;
+      font-weight: 400;
+      animation: fadeInUp 1.5s ease-out 0.3s both;
+    }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      background: rgba(255, 255, 255, 0.1);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 25px;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+      animation: fadeInUp 1.5s ease-out 0.6s both;
+    }
+
+    .back-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
+    }
+
+    /* Container */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+      position: relative;
+    }
+
+    /* Products Section */
+    .products-section {
+      background: linear-gradient(135deg, #1a1a1a 0%, #000000 100%);
+      position: relative;
+      padding: 6rem 2rem;
+      overflow: hidden;
+    }
+
+    .products-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="rgba(255,255,255,0.01)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+      opacity: 0.2;
+    }
+
+    .products-container {
+      position: relative;
+      z-index: 2;
+    }
+
+    .product {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 24px;
+      padding: 3rem;
+      display: flex;
+      gap: 3rem;
+      align-items: center;
+      margin-bottom: 3rem;
+      transition: all 0.4s ease;
+    }
+
+    .product:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .product img {
+      width: 400px;
+      height: 400px;
+      object-fit: cover;
+      border-radius: 20px;
+      flex-shrink: 0;
+      transition: transform 0.3s ease;
+    }
+
+    .product:hover img {
+      transform: scale(1.02);
+    }
+
+    .product-details {
+      flex: 1;
+    }
+
+    .product h2 {
+      font-size: 2.5rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: #ffffff;
+      letter-spacing: 1px;
+    }
+
+    .price {
+      font-size: 2rem;
+      font-weight: 700;
+      color: rgba(255, 255, 255, 0.9);
+      margin-bottom: 2rem;
+    }
+
+    .order-form {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 2rem;
+      margin-top: 2rem;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.75rem;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 1.1rem;
+    }
+
+    input[type="number"] {
+      width: 120px;
+      padding: 1rem;
+      font-size: 1.1rem;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 12px;
+      color: #ffffff;
+      margin-bottom: 1.5rem;
+      transition: all 0.3s ease;
+    }
+
+    input[type="number"]:focus {
+      outline: none;
+      border-color: rgba(255, 255, 255, 0.5);
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    input[type="number"]::placeholder {
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    .btn {
+      background: linear-gradient(135deg, #ffffff 0%, #f8f8f8 100%);
+      color: #000000;
+      padding: 1rem 2.5rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+      transition: left 0.5s;
+    }
+
+    .btn:hover::before {
+      left: 100%;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    }
+
+    /* Divider */
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+      margin: 4rem 0;
+    }
+
+    /* Footer */
+    footer {
+      background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      position: relative;
+    }
+
+    footer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="rgba(255,255,255,0.01)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+      opacity: 0.2;
+    }
+
+    .footer-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 3rem 2rem 2rem;
+      position: relative;
+      z-index: 2;
+      text-align: center;
+    }
+
+    .footer-container p {
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 0.9rem;
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 1024px) {
+      .hero h1 {
+        font-size: 3rem;
+      }
+
+      .product {
+        flex-direction: column;
+        text-align: center;
+        gap: 2rem;
+      }
+
+      .product img {
+        width: 300px;
+        height: 300px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .header-container {
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      nav {
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+
+      nav a {
+        padding: 0.5rem 1rem;
+        font-size: 0.85rem;
+      }
+
+      .hero {
+        padding: 6rem 1rem 3rem;
+        min-height: 40vh;
+      }
+
+      .hero h1 {
+        font-size: 2.5rem;
+        letter-spacing: 2px;
+      }
+
+      .hero p {
+        font-size: 1rem;
+      }
+
+      .products-section {
+        padding: 4rem 1rem;
+      }
+
+      .product {
+        padding: 2rem;
+        gap: 2rem;
+      }
+
+      .product h2 {
+        font-size: 2rem;
+      }
+
+      .price {
+        font-size: 1.5rem;
+      }
+
+      .product img {
+        width: 250px;
+        height: 250px;
+      }
+
+      .order-form {
+        padding: 1.5rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero h1 {
+        font-size: 2rem;
+      }
+
+      .hero p {
+        font-size: 0.9rem;
+      }
+
+      .product h2 {
+        font-size: 1.8rem;
+      }
+
+      .product img {
+        width: 200px;
+        height: 200px;
+      }
+
+      .footer-container {
+        padding: 2rem 1rem 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="header-container">
+      <a href="errix_originals_website(1).html" class="logo">Errix <span>Originals</span></a>
+      <nav aria-label="Main navigation">
+        <a href="errix_originals_website(1).html#shop">Shop</a>
+        <a href="errix_originals_website(1).html#about">About</a>
+        <a href="errix_originals_website(1).html#projects">Projects</a>
+        <a href="errix_originals_website(1).html#donate">Donate</a>
+        <a href="errix_originals_website(1).html#contact">Contact</a>
+        <a href="my-account.html" class="account-link">My Account</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Place Your Order</h1>
+      <p>Select your preferred product and quantity to proceed with your purchase. Every order supports our community initiatives.</p>
+      <a href="products.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i>
+        Back to Products
+      </a>
+    </div>
+  </section>
+
+  <section class="products-section">
+    <div class="products-container">
+      <div class="product">
+        <img src="https://via.placeholder.com/400x400?text=Signature+Sandal" alt="Signature Sandal" />
+        <div class="product-details">
+          <h2>Signature Sandal</h2>
+          <p class="price">₦9,380</p>
+          <div class="order-form">
+            <form action="https://paystack.com/pay/yourshoplink1" method="GET" aria-label="Order Signature Sandal">
+              <label for="quantity">Quantity</label>
+              <input type="number" id="quantity" name="quantity" min="1" value="1" />
+              <button type="submit" class="btn">
+                <i class="fas fa-shopping-cart"></i>
+                Buy Now
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="product">
+        <img src="https://via.placeholder.com/400x400?text=Dignity+Slide" alt="Dignity Slide" />
+        <div class="product-details">
+          <h2>Dignity Slide</h2>
+          <p class="price">₦7,500</p>
+          <div class="order-form">
+            <form action="https://paystack.com/pay/yourshoplink2" method="GET" aria-label="Order Dignity Slide">
+              <label for="quantity2">Quantity</label>
+              <input type="number" id="quantity2" name="quantity2" min="1" value="1" />
+              <button type="submit" class="btn">
+                <i class="fas fa-shopping-cart"></i>
+                Buy Now
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-container">
+      <p>&copy; 2025 Errix_Originals | RC: 8348241</p>
+    </div>
+  </footer>
+
+</body>
+</html>

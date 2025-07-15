@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Test</title>
+</head>
+<body>
+    <h1>Delete Test</h1>
+    <button onclick="testDelete()">Test Delete Product ID 1</button>
+    <button onclick="testGet()">Test Get Products</button>
+    <div id="result"></div>
+
+    <script>
+        async function testGet() {
+            try {
+                const response = await fetch('http://localhost:3000/api/products');
+                const products = await response.json();
+                document.getElementById('result').innerHTML = '<pre>' + JSON.stringify(products, null, 2) + '</pre>';
+            } catch (error) {
+                document.getElementById('result').innerHTML = 'Error: ' + error.message;
+            }
+        }
+
+        async function testDelete() {
+            try {
+                console.log('Testing delete...');
+                const response = await fetch('http://localhost:3000/api/products/1', {
+                    method: 'DELETE'
+                });
+                console.log('Response status:', response.status);
+                const result = await response.json();
+                console.log('Response data:', result);
+                document.getElementById('result').innerHTML = '<pre>' + JSON.stringify(result, null, 2) + '</pre>';
+            } catch (error) {
+                console.error('Delete error:', error);
+                document.getElementById('result').innerHTML = 'Error: ' + error.message;
+            }
+        }
+    </script>
+</body>
+</html> 

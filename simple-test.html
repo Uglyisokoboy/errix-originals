@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Simple Delete Test</title>
+</head>
+<body>
+    <h1>Simple Delete Test</h1>
+    
+    <h2>Step 1: Test Server Connection</h2>
+    <button onclick="testConnection()">Test Connection</button>
+    <div id="connection-result"></div>
+    
+    <h2>Step 2: Get Products</h2>
+    <button onclick="getProducts()">Get Products</button>
+    <div id="products-result"></div>
+    
+    <h2>Step 3: Delete Product</h2>
+    <input type="number" id="deleteId" value="1" placeholder="Product ID to delete">
+    <button onclick="deleteProduct()">Delete Product</button>
+    <div id="delete-result"></div>
+    
+    <script>
+        async function testConnection() {
+            try {
+                const response = await fetch('http://localhost:3000/api/test');
+                const data = await response.json();
+                document.getElementById('connection-result').innerHTML = 
+                    '<pre style="background:#f0f0f0;padding:10px;">' + JSON.stringify(data, null, 2) + '</pre>';
+            } catch (error) {
+                document.getElementById('connection-result').innerHTML = 
+                    '<p style="color:red;">Error: ' + error.message + '</p>';
+            }
+        }
+        
+        async function getProducts() {
+            try {
+                const response = await fetch('http://localhost:3000/api/products');
+                const products = await response.json();
+                document.getElementById('products-result').innerHTML = 
+                    '<pre style="background:#f0f0f0;padding:10px;">' + JSON.stringify(products, null, 2) + '</pre>';
+            } catch (error) {
+                document.getElementById('products-result').innerHTML = 
+                    '<p style="color:red;">Error: ' + error.message + '</p>';
+            }
+        }
+        
+        async function deleteProduct() {
+            const id = document.getElementById('deleteId').value;
+            try {
+                console.log('Attempting to delete product ID:', id);
+                const response = await fetch(`http://localhost:3000/api/products/${id}`, {
+                    method: 'DELETE'
+                });
+                console.log('Response status:', response.status);
+                const result = await response.json();
+                console.log('Response data:', result);
+                document.getElementById('delete-result').innerHTML = 
+                    '<pre style="background:#f0f0f0;padding:10px;">' + JSON.stringify(result, null, 2) + '</pre>';
+            } catch (error) {
+                console.error('Delete error:', error);
+                document.getElementById('delete-result').innerHTML = 
+                    '<p style="color:red;">Error: ' + error.message + '</p>';
+            }
+        }
+    </script>
+</body>
+</html> 

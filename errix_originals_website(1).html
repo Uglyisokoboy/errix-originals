@@ -1,0 +1,1611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Errix_Originals</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: linear-gradient(135deg, #000000 0%, #1a1a1a 50%, #000000 100%);
+      color: #ffffff;
+      line-height: 1.6;
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+    }
+
+    /* Modern Header */
+    header {
+      background: rgba(0, 0, 0, 0.95);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      padding: 1.5rem 0;
+      transition: all 0.3s ease;
+    }
+
+    .header-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #ffffff;
+      text-decoration: none;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .logo span {
+      color: rgba(255, 255, 255, 0.7);
+      font-weight: 300;
+    }
+
+    /* Modern Navigation */
+    nav {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: rgba(255, 255, 255, 0.8);
+      font-weight: 500;
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 0.75rem 1.5rem;
+      border-radius: 25px;
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      position: relative;
+      overflow: hidden;
+    }
+
+    nav a::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+      transition: left 0.5s;
+    }
+
+    nav a:hover::before {
+      left: 100%;
+    }
+
+    nav a:hover {
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateY(-2px);
+    }
+
+    .account-link {
+      background: linear-gradient(135deg, #ffffff 0%, #f8f8f8 100%);
+      color: #000000 !important;
+      font-weight: 600;
+    }
+
+    .account-link:hover {
+      background: linear-gradient(135deg, #f8f8f8 0%, #ffffff 100%);
+      transform: translateY(-2px) scale(1.05);
+    }
+
+    /* Hero Section */
+    .hero {
+      background: linear-gradient(135deg, #000000 0%, #1a1a1a 50%, #000000 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      padding: 8rem 2rem 4rem;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="rgba(255,255,255,0.02)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+      opacity: 0.3;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 800px;
+    }
+
+    .hero h1 {
+      font-size: 4.5rem;
+      font-weight: 300;
+      margin-bottom: 2rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      background: linear-gradient(135deg, #ffffff 0%, rgba(255,255,255,0.8) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: fadeInUp 1.5s ease-out;
+    }
+
+    .hero p {
+      font-size: 1.3rem;
+      max-width: 600px;
+      margin: 0 auto 3rem;
+      color: rgba(255, 255, 255, 0.9);
+      line-height: 1.8;
+      font-weight: 400;
+      animation: fadeInUp 1.5s ease-out 0.3s both;
+    }
+
+    .cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1.2rem 3rem;
+      background: linear-gradient(135deg, #ffffff 0%, #f8f8f8 100%);
+      color: #000000;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.1rem;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      animation: fadeInUp 1.5s ease-out 0.6s both;
+    }
+
+    .cta::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+      transition: left 0.5s;
+    }
+
+    .cta:hover::before {
+      left: 100%;
+    }
+
+    .cta:hover {
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    }
+
+    .cta i {
+      transition: transform 0.3s ease;
+    }
+
+    .cta:hover i {
+      transform: translateX(5px);
+    }
+
+    /* Section Styling */
+    section {
+      padding: 6rem 2rem;
+      max-width: 1400px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    section h2 {
+      font-size: 3rem;
+      font-weight: 300;
+      margin-bottom: 2rem;
+      text-align: center;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #ffffff;
+    }
+
+    .section-divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+      margin: 2rem 0;
+    }
+
+    /* Projects Section */
+    .projects {
+      background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
+      position: relative;
+    }
+
+    .projects::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="rgba(255,255,255,0.01)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+      opacity: 0.2;
+    }
+
+    .projects-container {
+      position: relative;
+      z-index: 2;
+    }
+
+    .project-card {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 24px;
+      padding: 3rem;
+      display: flex;
+      gap: 3rem;
+      align-items: flex-start;
+      transition: all 0.4s ease;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .project-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .project-icon {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, #ffffff 0%, rgba(255,255,255,0.8) 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .project-icon i {
+      font-size: 2rem;
+      color: #000000;
+    }
+
+    .project-content h3 {
+      font-size: 2rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      color: #ffffff;
+      letter-spacing: 1px;
+    }
+
+    .project-content p {
+      font-size: 1.1rem;
+      line-height: 1.8;
+      color: rgba(255, 255, 255, 0.8);
+      margin-bottom: 2rem;
+    }
+
+    .project-stats {
+      display: flex;
+      gap: 3rem;
+      flex-wrap: wrap;
+    }
+
+    .stat {
+      text-align: center;
+    }
+
+    .stat-number {
+      display: block;
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-label {
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.6);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* Contact Section */
+    .contact {
+      background: linear-gradient(135deg, #1a1a1a 0%, #000000 100%);
+      position: relative;
+    }
+
+    .contact::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="rgba(255,255,255,0.01)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+      opacity: 0.2;
+    }
+
+    .contact-container {
+      position: relative;
+      z-index: 2;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .contact-card {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 2.5rem;
+      text-align: center;
+      transition: all 0.4s ease;
+    }
+
+    .contact-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .contact-icon {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, #ffffff 0%, rgba(255,255,255,0.8) 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.5rem;
+    }
+
+    .contact-icon i {
+      font-size: 1.5rem;
+      color: #000000;
+    }
+
+    .contact-card h3 {
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: #ffffff;
+      letter-spacing: 1px;
+    }
+
+    .contact-card p {
+      font-size: 1.1rem;
+      color: rgba(255, 255, 255, 0.8);
+      line-height: 1.6;
+    }
+    
+    /* Premium About Us Section - Professional Grade */
+    .about {
+      background: #ffffff;
+      position: relative;
+      padding: 8rem 0;
+      overflow: hidden;
+    }
+    
+    .about::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, #000, transparent);
+    }
+    
+    .about::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, #000, transparent);
+    }
+    
+    .about-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 4rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+    }
+    
+    .about-content {
+      position: relative;
+    }
+    
+    .about-subtitle {
+      font-size: 0.875rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: #666;
+      margin-bottom: 1rem;
+      display: block;
+    }
+    
+    .about h2 {
+      font-size: 3.5rem;
+      font-weight: 300;
+      line-height: 1.1;
+      margin-bottom: 2rem;
+      color: #000;
+      text-align: left;
+    }
+    
+    .about-description {
+      font-size: 1.125rem;
+      line-height: 1.8;
+      color: #333;
+      margin-bottom: 3rem;
+      text-align: left;
+      font-weight: 400;
+    }
+    
+    .about-highlights {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+    
+    .highlight-item {
+      position: relative;
+      padding-left: 2rem;
+    }
+    
+    .highlight-item::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.5rem;
+      width: 8px;
+      height: 8px;
+      background: #000;
+      border-radius: 50%;
+    }
+    
+    .highlight-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #000;
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    
+    .highlight-text {
+      font-size: 0.9rem;
+      color: #666;
+      line-height: 1.6;
+    }
+    
+    .about-visual {
+      position: relative;
+      height: 600px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .visual-element {
+      width: 400px;
+      height: 400px;
+      background: linear-gradient(145deg, #f8f8f8, #e8e8e8);
+      border-radius: 50%;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 
+        0 20px 40px rgba(0,0,0,0.1),
+        inset 0 1px 0 rgba(255,255,255,0.8);
+    }
+    
+    .visual-element::before {
+      content: 'ERRIX';
+      font-size: 2rem;
+      font-weight: 300;
+      letter-spacing: 8px;
+      color: #000;
+      transform: rotate(-15deg);
+    }
+    
+    .visual-element::after {
+      content: '';
+      position: absolute;
+      top: -20px;
+      left: -20px;
+      right: -20px;
+      bottom: -20px;
+      border: 1px solid rgba(0,0,0,0.1);
+      border-radius: 50%;
+      animation: rotate 20s linear infinite;
+    }
+    
+    @keyframes rotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    
+    .floating-dots {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+    }
+    
+    .dot {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: #000;
+      border-radius: 50%;
+      animation: float 6s ease-in-out infinite;
+    }
+    
+    .dot:nth-child(1) { top: 20%; left: 10%; animation-delay: 0s; }
+    .dot:nth-child(2) { top: 60%; right: 20%; animation-delay: 1s; }
+    .dot:nth-child(3) { bottom: 30%; left: 30%; animation-delay: 2s; }
+    .dot:nth-child(4) { top: 40%; right: 10%; animation-delay: 3s; }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); opacity: 0.3; }
+      50% { transform: translateY(-20px); opacity: 1; }
+    }
+    
+    @media (max-width: 1024px) {
+      .about-container {
+        grid-template-columns: 1fr;
+        gap: 4rem;
+        padding: 0 2rem;
+      }
+      
+      .about h2 {
+        font-size: 2.5rem;
+        text-align: center;
+      }
+      
+      .about-description {
+        text-align: center;
+      }
+      
+      .about-highlights {
+        grid-template-columns: 1fr;
+      }
+      
+      .visual-element {
+        width: 300px;
+        height: 300px;
+      }
+    }
+    .donate button {
+      margin-top: 1rem;
+      padding: 0.75rem 1.5rem;
+      background-color: #000;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background-color 0.3s ease;
+    }
+    /* Modern Donate Section */
+    .donate {
+      background: linear-gradient(135deg, #000000 0%, #1a1a1a 50%, #000000 100%);
+      position: relative;
+      padding: 6rem 0;
+      overflow: hidden;
+    }
+
+    .donate::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    }
+
+    .donate::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    }
+
+    .donate-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .donate-content {
+      text-align: center;
+      margin-bottom: 4rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    .donate-title {
+      font-size: 3.5rem;
+      font-weight: 300;
+      color: white;
+      margin-bottom: 2rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      position: relative;
+    }
+
+    .donate-title::after {
+      content: '';
+      position: absolute;
+      bottom: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, white, transparent);
+    }
+
+    .donate-description {
+      font-size: 1.2rem;
+      color: rgba(255, 255, 255, 0.9);
+      max-width: 800px;
+      margin: 0 auto 3rem;
+      line-height: 1.8;
+      font-weight: 400;
+    }
+
+    .donate-btn {
+      background: linear-gradient(135deg, #ffffff 0%, #f8f8f8 100%);
+      color: #000000;
+      border: none;
+      padding: 1.2rem 3rem;
+      border-radius: 50px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      display: inline-flex;
+      align-items: center;
+      gap: 1rem;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+
+    .donate-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+      transition: left 0.5s;
+    }
+
+    .donate-btn:hover::before {
+      left: 100%;
+    }
+
+    .donate-btn:hover {
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    }
+
+    .btn-icon {
+      transition: transform 0.3s ease;
+    }
+
+    .donate-btn:hover .btn-icon {
+      transform: scale(1.2);
+    }
+
+    /* Campaign Gallery */
+    .campaign-gallery {
+      margin: 4rem 0;
+      position: relative;
+      z-index: 2;
+    }
+
+    .gallery-title {
+      font-size: 2rem;
+      font-weight: 600;
+      color: white;
+      text-align: center;
+      margin-bottom: 3rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+
+    .gallery-item {
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      background: rgba(255,255,255,0.1);
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .gallery-item:hover {
+      transform: translateY(-10px) scale(1.02);
+      box-shadow: 0 25px 50px rgba(0,0,0,0.4);
+    }
+
+    .gallery-image {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+
+    .gallery-item:hover .gallery-image {
+      transform: scale(1.1);
+    }
+
+    .gallery-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(transparent, rgba(0,0,0,0.8));
+      padding: 2rem 1.5rem 1.5rem;
+      transform: translateY(100%);
+      transition: transform 0.4s ease;
+    }
+
+    .gallery-item:hover .gallery-overlay {
+      transform: translateY(0);
+    }
+
+    .gallery-caption {
+      color: white;
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .gallery-description {
+      color: rgba(255,255,255,0.8);
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    /* Partners Section */
+    .partners-section {
+      text-align: center;
+      margin-top: 4rem;
+      padding-top: 3rem;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .partners-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.8);
+      margin-bottom: 2rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .partners-grid {
+      display: flex;
+      justify-content: center;
+      gap: 3rem;
+      flex-wrap: wrap;
+    }
+
+    .partner-logo {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 1.5rem;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.05);
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.1);
+      transition: all 0.3s ease;
+      min-width: 150px;
+    }
+
+    .partner-logo:hover {
+      background: rgba(255,255,255,0.1);
+      transform: translateY(-5px);
+    }
+
+    .partner-logo i {
+      font-size: 2rem;
+      color: rgba(255,255,255,0.8);
+    }
+
+    .partner-logo span {
+      color: rgba(255,255,255,0.7);
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    /* Responsive Design */
+    /* Footer */
+    footer {
+      background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      position: relative;
+    }
+
+    footer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="rgba(255,255,255,0.01)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+      opacity: 0.2;
+    }
+
+    .footer-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 4rem 2rem 2rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    .footer-content {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 4rem;
+      margin-bottom: 3rem;
+    }
+
+    .footer-brand h3 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: #ffffff;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .footer-brand p {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 1.1rem;
+      line-height: 1.6;
+    }
+
+    .footer-links {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 3rem;
+    }
+
+    .footer-section h4 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      color: #ffffff;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .footer-section a {
+      display: block;
+      color: rgba(255, 255, 255, 0.7);
+      text-decoration: none;
+      margin-bottom: 0.75rem;
+      transition: color 0.3s ease;
+    }
+
+    .footer-section a:hover {
+      color: #ffffff;
+    }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding-top: 2rem;
+      text-align: center;
+    }
+
+    .footer-bottom p {
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 0.9rem;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 1024px) {
+      .hero h1 {
+        font-size: 3.5rem;
+      }
+
+      .about-container {
+        grid-template-columns: 1fr;
+        gap: 4rem;
+      }
+
+      .project-card {
+        flex-direction: column;
+        text-align: center;
+        gap: 2rem;
+      }
+
+      .project-stats {
+        justify-content: center;
+      }
+
+      .footer-content {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .header-container {
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      nav {
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+
+      nav a {
+        padding: 0.5rem 1rem;
+        font-size: 0.85rem;
+      }
+
+      .hero {
+        padding: 6rem 1rem 3rem;
+      }
+
+      .hero h1 {
+        font-size: 2.5rem;
+        letter-spacing: 2px;
+      }
+
+      .hero p {
+        font-size: 1.1rem;
+      }
+
+      .cta {
+        padding: 1rem 2rem;
+        font-size: 1rem;
+      }
+
+      section {
+        padding: 4rem 1rem;
+      }
+
+      section h2 {
+        font-size: 2.2rem;
+      }
+
+      .donate-title {
+        font-size: 2.5rem;
+      }
+
+      .donate-description {
+        font-size: 1rem;
+        padding: 0 1rem;
+      }
+
+      .gallery-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+
+      .partners-grid {
+        gap: 1.5rem;
+      }
+
+      .partner-logo {
+        min-width: 120px;
+        padding: 1rem;
+      }
+
+      .project-stats {
+        gap: 2rem;
+      }
+
+      .contact-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+
+      .footer-links {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .product {
+        min-width: 280px;
+        max-width: 280px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero h1 {
+        font-size: 2rem;
+      }
+
+      .hero p {
+        font-size: 1rem;
+      }
+
+      .about h2 {
+        font-size: 2rem;
+      }
+
+      .project-content h3 {
+        font-size: 1.5rem;
+      }
+
+      .stat-number {
+        font-size: 2rem;
+      }
+
+      .footer-container {
+        padding: 3rem 1rem 1.5rem;
+      }
+    }
+
+    /* Loading Animation for Gallery */
+    .gallery-loading {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 3rem;
+      color: rgba(255,255,255,0.6);
+    }
+
+    .gallery-loading::after {
+      content: '';
+      width: 30px;
+      height: 30px;
+      border: 3px solid rgba(255,255,255,0.3);
+      border-top: 3px solid white;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin-left: 1rem;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    footer p {
+      margin: 0;
+      font-size: 0.9rem;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    /* Modern Shop Section */
+    #shop-section {
+      background: linear-gradient(135deg, #1a1a1a 0%, #000000 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    #shop-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="rgba(255,255,255,0.01)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+      opacity: 0.2;
+    }
+
+    #shop-section h2 {
+      position: relative;
+      z-index: 2;
+    }
+
+    #shop {
+      display: flex;
+      flex-wrap: nowrap;
+      gap: 2rem;
+      padding: 2rem 0;
+      overflow-x: auto;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(255,255,255,0.3) transparent;
+      position: relative;
+      z-index: 2;
+    }
+
+    #shop::-webkit-scrollbar {
+      height: 8px;
+    }
+
+    #shop::-webkit-scrollbar-track {
+      background: rgba(255,255,255,0.1);
+      border-radius: 4px;
+    }
+
+    #shop::-webkit-scrollbar-thumb {
+      background: rgba(255,255,255,0.3);
+      border-radius: 4px;
+    }
+
+    #shop::-webkit-scrollbar-thumb:hover {
+      background: rgba(255,255,255,0.5);
+    }
+
+    .product {
+      min-width: 320px;
+      max-width: 320px;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      overflow: hidden;
+      text-align: center;
+      padding: 2rem 1.5rem;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      position: relative;
+    }
+
+    .product::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, transparent 100%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .product:hover::before {
+      opacity: 1;
+    }
+
+    .product:hover {
+      transform: translateY(-10px) scale(1.02);
+      box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+    }
+
+    .product img {
+      width: 100%;
+      max-width: 200px;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 16px;
+      margin: 0 auto 1.5rem;
+      display: block;
+      transition: transform 0.3s ease;
+    }
+
+    .product:hover img {
+      transform: scale(1.05);
+    }
+
+    .product h3 {
+      font-size: 1.4rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: #ffffff;
+      letter-spacing: 1px;
+    }
+
+    .product p {
+      font-weight: 700;
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .product button {
+      width: 100%;
+      padding: 1rem 2rem;
+      background: linear-gradient(135deg, #ffffff 0%, #f8f8f8 100%);
+      color: #000000;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .product button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+      transition: left 0.5s;
+    }
+
+    .product button:hover::before {
+      left: 100%;
+    }
+
+    .product button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="header-container">
+      <a href="#" class="logo">Errix <span>Originals</span></a>
+      <nav aria-label="Main navigation">
+        <a href="#shop">Shop</a>
+        <a href="#about">About</a>
+        <a href="#projects">Projects</a>
+        <a href="#donate">Donate</a>
+        <a href="#contact">Contact</a>
+        <a href="my-account.html" class="account-link">My Account</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Step Into Impact</h1>
+      <p>Our handmade footwear does more than walk — it speaks, empowers, and uplifts. Every pair purchased fuels dignity, education, and purpose.</p>
+      <a href="products.html" class="cta">
+        <span>Explore Our Collection</span>
+        <i class="fas fa-arrow-right"></i>
+      </a>
+    </div>
+  </section>
+
+  <section id="shop-section">
+    <h2>Shop Our Signature Styles</h2>
+    <div class="shop" id="shop"></div>
+  </section>
+
+  <section id="about" class="about">
+    <div class="about-container">
+      <div class="about-content">
+        <span class="about-subtitle">Our Story</span>
+        <h2>Crafting Purpose<br>Through Every Step</h2>
+        <p class="about-description">
+          Errix_Originals transcends traditional footwear. We are a premium, purpose-driven brand based in Abuja, Nigeria, where every handmade pair represents more than style—it embodies transformation. Each creation reinvests in dignity-based outreach programs, championing girl-child education and empowerment through self-funded and community-led campaigns.
+        </p>
+        <div class="about-highlights">
+          <div class="highlight-item">
+            <div class="highlight-title">Artisan Craftsmanship</div>
+            <div class="highlight-text">Every pair meticulously handcrafted by skilled artisans, ensuring premium quality and unique character.</div>
+          </div>
+          <div class="highlight-item">
+            <div class="highlight-title">Social Impact</div>
+            <div class="highlight-text">100% of profits reinvested into community programs, education initiatives, and empowerment campaigns.</div>
+          </div>
+          <div class="highlight-item">
+            <div class="highlight-title">Sustainable Practices</div>
+            <div class="highlight-text">Ethical sourcing and environmentally conscious production methods that respect our planet.</div>
+          </div>
+          <div class="highlight-item">
+            <div class="highlight-title">Community First</div>
+            <div class="highlight-text">Built on the foundation of local partnerships and grassroots community development.</div>
+          </div>
+        </div>
+      </div>
+      <div class="about-visual">
+        <div class="visual-element">
+          <div class="floating-dots">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects" class="projects">
+    <div class="projects-container">
+      <h2>Our Projects</h2>
+      <div class="project-card">
+        <div class="project-icon">
+          <i class="fas fa-heart"></i>
+        </div>
+        <div class="project-content">
+          <h3>Sole to Soul — Girl Child Edition</h3>
+          <p>A flagship project delivering dignity kits and sandals to schoolgirls across public schools. We collaborate with local artisans, community leaders, and organizations to restore pride one sole at a time.</p>
+          <div class="project-stats">
+            <div class="stat">
+              <span class="stat-number">500+</span>
+              <span class="stat-label">Girls Empowered</span>
+            </div>
+            <div class="stat">
+              <span class="stat-number">25</span>
+              <span class="stat-label">Schools Reached</span>
+            </div>
+            <div class="stat">
+              <span class="stat-number">100%</span>
+              <span class="stat-label">Community Led</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="donate" class="donate">
+    <div class="donate-container">
+      <div class="donate-content">
+        <h2 class="donate-title">Support Our Campaigns</h2>
+        <p class="donate-description">Your donation fuels community impact — from mentorship to mobility. 100% of donations go directly into outreach materials, school kits, and community activation.</p>
+        <button class="donate-btn" onclick="window.location.href='https://paystack.com/pay/yourdonationlink'">
+          <span class="btn-text">Donate Now</span>
+          <span class="btn-icon">
+            <i class="fas fa-heart"></i>
+          </span>
+        </button>
+      </div>
+      
+      <div class="campaign-gallery">
+        <h3 class="gallery-title">Recent Impact</h3>
+        <div class="gallery-grid" id="campaignGallery">
+          <!-- Images will be loaded dynamically -->
+        </div>
+      </div>
+      
+      <div class="partners-section">
+        <h4 class="partners-title">Our Partners</h4>
+        <div class="partners-grid">
+          <div class="partner-logo">
+            <i class="fas fa-building"></i>
+            <span>Community Foundation</span>
+          </div>
+          <div class="partner-logo">
+            <i class="fas fa-graduation-cap"></i>
+            <span>Education Initiative</span>
+          </div>
+          <div class="partner-logo">
+            <i class="fas fa-hands-helping"></i>
+            <span>Local Support</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="contact">
+    <div class="contact-container">
+      <h2>Get In Touch</h2>
+      <div class="contact-grid">
+        <div class="contact-card">
+          <div class="contact-icon">
+            <i class="fas fa-envelope"></i>
+          </div>
+          <h3>Email</h3>
+          <p>errix_originals@gmail.com</p>
+        </div>
+        <div class="contact-card">
+          <div class="contact-icon">
+            <i class="fas fa-phone"></i>
+          </div>
+          <h3>Phone</h3>
+          <p>08100514596</p>
+        </div>
+        <div class="contact-card">
+          <div class="contact-icon">
+            <i class="fab fa-instagram"></i>
+          </div>
+          <h3>Instagram</h3>
+          <p>@errix_originals</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-container">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <h3>Errix Originals</h3>
+          <p>Craft with Purpose. Walk with Dignity.</p>
+        </div>
+        <div class="footer-links">
+          <div class="footer-section">
+            <h4>Quick Links</h4>
+            <a href="#shop">Shop</a>
+            <a href="#about">About</a>
+            <a href="#projects">Projects</a>
+            <a href="#donate">Donate</a>
+          </div>
+          <div class="footer-section">
+            <h4>Contact</h4>
+            <a href="mailto:errix_originals@gmail.com">Email</a>
+            <a href="tel:08100514596">Phone</a>
+            <a href="https://instagram.com/errix_originals">Instagram</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 Errix_Originals | RC: 8348241</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    async function loadProducts() {
+      const shop = document.getElementById('shop');
+      shop.innerHTML = '<p>Loading...</p>';
+      try {
+        const res = await fetch('http://localhost:3000/api/products');
+        const products = await res.json();
+        if (products.length === 0) {
+          shop.innerHTML = '<p>No products available.</p>';
+          return;
+        }
+        shop.innerHTML = '';
+        products.forEach(product => {
+          const div = document.createElement('div');
+          div.className = 'product';
+          const imgSrc = product.image && product.image.startsWith('http') ? product.image : `http://localhost:3000/uploads/${product.image}`;
+          div.innerHTML = `
+            <img src="${imgSrc}" alt="${product.name}">
+            <h3>${product.name}</h3>
+            <p>₦${product.price}</p>
+            <button onclick=\"window.location.href='Order.html'\">Order Now</button>
+          `;
+          shop.appendChild(div);
+        });
+      } catch (err) {
+        shop.innerHTML = '<p>Error loading products.</p>';
+      }
+    }
+    loadProducts();
+    
+    // Load Campaign Gallery
+    async function loadCampaignGallery() {
+      const gallery = document.getElementById('campaignGallery');
+      gallery.innerHTML = '<div class="gallery-loading">Loading campaign images...</div>';
+      
+      try {
+        const response = await fetch('http://localhost:3000/api/campaigns');
+        const campaigns = await response.json();
+        
+        if (campaigns.length === 0) {
+          // Show default campaign images if none exist
+          const defaultCampaigns = [
+            {
+              id: 1,
+              image: 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&h=400&fit=crop',
+              caption: 'School Kit Distribution',
+              description: 'Providing essential supplies to students in need'
+            },
+            {
+              id: 2,
+              image: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=600&h=400&fit=crop',
+              caption: 'Community Workshop',
+              description: 'Empowering local communities through skill development'
+            },
+            {
+              id: 3,
+              image: 'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=600&h=400&fit=crop',
+              caption: 'Mentorship Program',
+              description: 'Building futures through guidance and support'
+            },
+            {
+              id: 4,
+              image: 'https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?w=600&h=400&fit=crop',
+              caption: 'Health & Wellness',
+              description: 'Promoting healthy lifestyles in our communities'
+            },
+            {
+              id: 5,
+              image: 'https://images.unsplash.com/photo-1531206715517-5c0ba140b2b8?w=600&h=400&fit=crop',
+              caption: 'Environmental Initiative',
+              description: 'Creating sustainable solutions for our planet'
+            },
+            {
+              id: 6,
+              image: 'https://images.unsplash.com/photo-1559027615-cd4628902d4a?w=600&h=400&fit=crop',
+              caption: 'Youth Empowerment',
+              description: 'Inspiring the next generation of leaders'
+            }
+          ];
+          
+          gallery.innerHTML = defaultCampaigns.map(campaign => `
+            <div class="gallery-item">
+              <img src="${campaign.image}" alt="${campaign.caption}" class="gallery-image">
+              <div class="gallery-overlay">
+                <div class="gallery-caption">${campaign.caption}</div>
+                <div class="gallery-description">${campaign.description}</div>
+              </div>
+            </div>
+          `).join('');
+        } else {
+          gallery.innerHTML = campaigns.map(campaign => `
+            <div class="gallery-item">
+              <img src="${campaign.image}" alt="${campaign.caption}" class="gallery-image">
+              <div class="gallery-overlay">
+                <div class="gallery-caption">${campaign.caption}</div>
+                <div class="gallery-description">${campaign.description}</div>
+              </div>
+            </div>
+          `).join('');
+        }
+      } catch (error) {
+        console.error('Error loading campaign gallery:', error);
+        gallery.innerHTML = '<div class="gallery-loading">Unable to load campaign images</div>';
+      }
+    }
+    
+    // Initialize gallery
+    loadCampaignGallery();
+  </script>
+
+</body>
+</html>

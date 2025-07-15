@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Campaigns - Errix Originals Admin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #000000 0%, #1a1a1a 50%, #000000 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 300;
+            margin-bottom: 0.5rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .header p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1.1rem;
+        }
+
+        .nav-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .nav-link {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-link:hover {
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .add-campaign-form {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2rem;
+            height: fit-content;
+        }
+
+        .form-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: #ffffff;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            color: #ffffff;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: rgba(255, 255, 255, 0.5);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .form-input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .file-input-wrapper {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .file-input {
+            position: absolute;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+
+        .file-input-label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 1rem;
+            border: 2px dashed rgba(255, 255, 255, 0.3);
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            color: rgba(255, 255, 255, 0.7);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .file-input-label:hover {
+            border-color: rgba(255, 255, 255, 0.5);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, #ffffff 0%, #f8f8f8 100%);
+            color: #000000;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .campaigns-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .campaign-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .campaign-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .campaign-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .campaign-content {
+            padding: 1.5rem;
+        }
+
+        .campaign-caption {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #ffffff;
+        }
+
+        .campaign-description {
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .campaign-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .action-btn {
+            flex: 1;
+            padding: 0.75rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .edit-btn {
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+        }
+
+        .edit-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .delete-btn {
+            background: rgba(255, 59, 48, 0.2);
+            color: #ff3b30;
+        }
+
+        .delete-btn:hover {
+            background: rgba(255, 59, 48, 0.3);
+        }
+
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 3rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .loading::after {
+            content: '';
+            width: 30px;
+            height: 30px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top: 3px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-left: 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .success-message {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            background: rgba(52, 199, 89, 0.9);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+        }
+
+        .success-message.show {
+            transform: translateX(0);
+        }
+
+        .error-message {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            background: rgba(255, 59, 48, 0.9);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+        }
+
+        .error-message.show {
+            transform: translateX(0);
+        }
+
+        @media (max-width: 768px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .campaigns-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links {
+                gap: 1rem;
+            }
+
+            .nav-link {
+                padding: 0.5rem 1rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Manage Campaigns</h1>
+            <p>Upload and manage campaign images for the main site</p>
+        </div>
+
+        <div class="nav-links">
+            <a href="dashboard.html" class="nav-link">Dashboard</a>
+            <a href="edit-products.html" class="nav-link">Edit Products</a>
+            <a href="add-product.html" class="nav-link">Add Product</a>
+            <a href="manage-campaigns.html" class="nav-link">Manage Campaigns</a>
+        </div>
+
+        <div class="content-grid">
+            <div class="add-campaign-form">
+                <h2 class="form-title">Add New Campaign</h2>
+                <form id="campaignForm">
+                    <div class="form-group">
+                        <label class="form-label">Campaign Image</label>
+                        <div class="file-input-wrapper">
+                            <input type="file" id="campaignImage" class="file-input" accept="image/*" required>
+                            <label for="campaignImage" class="file-input-label">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                Choose Image
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Caption</label>
+                        <input type="text" id="caption" class="form-input" placeholder="Enter campaign caption" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Description</label>
+                        <textarea id="description" class="form-input" placeholder="Enter campaign description" rows="3"></textarea>
+                    </div>
+
+                    <button type="submit" class="submit-btn" id="submitBtn">
+                        <span class="btn-text">Add Campaign</span>
+                    </button>
+                </form>
+            </div>
+
+            <div class="campaigns-section">
+                <h2 class="form-title">Current Campaigns</h2>
+                <div id="campaignsGrid" class="campaigns-grid">
+                    <div class="loading">Loading campaigns...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="successMessage" class="success-message"></div>
+    <div id="errorMessage" class="error-message"></div>
+
+    <script>
+        // Load campaigns on page load
+        loadCampaigns();
+
+        // Handle form submission
+        document.getElementById('campaignForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const submitBtn = document.getElementById('submitBtn');
+            const btnText = submitBtn.querySelector('.btn-text');
+            
+            submitBtn.disabled = true;
+            btnText.textContent = 'Adding...';
+            
+            const formData = new FormData();
+            formData.append('image', document.getElementById('campaignImage').files[0]);
+            formData.append('caption', document.getElementById('caption').value);
+            formData.append('description', document.getElementById('description').value);
+            
+            try {
+                const response = await fetch('http://localhost:3000/api/campaigns', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    showMessage('Campaign added successfully!', 'success');
+                    document.getElementById('campaignForm').reset();
+                    loadCampaigns();
+                } else {
+                    showMessage(result.error || 'Failed to add campaign', 'error');
+                }
+            } catch (error) {
+                console.error('Error adding campaign:', error);
+                showMessage('Error adding campaign', 'error');
+            } finally {
+                submitBtn.disabled = false;
+                btnText.textContent = 'Add Campaign';
+            }
+        });
+
+        // Load campaigns
+        async function loadCampaigns() {
+            const grid = document.getElementById('campaignsGrid');
+            grid.innerHTML = '<div class="loading">Loading campaigns...</div>';
+            
+            try {
+                const response = await fetch('http://localhost:3000/api/campaigns');
+                const campaigns = await response.json();
+                
+                if (campaigns.length === 0) {
+                    grid.innerHTML = '<p style="text-align: center; color: rgba(255,255,255,0.6);">No campaigns found</p>';
+                    return;
+                }
+                
+                grid.innerHTML = campaigns.map(campaign => `
+                    <div class="campaign-card" data-id="${campaign.id}">
+                        <img src="${campaign.image}" alt="${campaign.caption}" class="campaign-image">
+                        <div class="campaign-content">
+                            <div class="campaign-caption">${campaign.caption}</div>
+                            <div class="campaign-description">${campaign.description}</div>
+                            <div class="campaign-actions">
+                                <button class="action-btn edit-btn" onclick="editCampaign(${campaign.id})">
+                                    <i class="fas fa-edit"></i> Edit
+                                </button>
+                                <button class="action-btn delete-btn" onclick="deleteCampaign(${campaign.id})">
+                                    <i class="fas fa-trash"></i> Delete
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            } catch (error) {
+                console.error('Error loading campaigns:', error);
+                grid.innerHTML = '<p style="text-align: center; color: rgba(255,255,255,0.6);">Error loading campaigns</p>';
+            }
+        }
+
+        // Delete campaign
+        async function deleteCampaign(id) {
+            if (!confirm('Are you sure you want to delete this campaign?')) {
+                return;
+            }
+            
+            try {
+                const response = await fetch(`http://localhost:3000/api/campaigns/${id}`, {
+                    method: 'DELETE'
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    showMessage('Campaign deleted successfully!', 'success');
+                    loadCampaigns();
+                } else {
+                    showMessage(result.error || 'Failed to delete campaign', 'error');
+                }
+            } catch (error) {
+                console.error('Error deleting campaign:', error);
+                showMessage('Error deleting campaign', 'error');
+            }
+        }
+
+        // Edit campaign (placeholder for future implementation)
+        function editCampaign(id) {
+            alert('Edit functionality will be implemented in the next update');
+        }
+
+        // Show message
+        function showMessage(message, type) {
+            const messageEl = document.getElementById(type === 'success' ? 'successMessage' : 'errorMessage');
+            messageEl.textContent = message;
+            messageEl.classList.add('show');
+            
+            setTimeout(() => {
+                messageEl.classList.remove('show');
+            }, 3000);
+        }
+
+        // File input preview
+        document.getElementById('campaignImage').addEventListener('change', function(e) {
+            const label = this.nextElementSibling;
+            if (this.files.length > 0) {
+                label.innerHTML = `<i class="fas fa-check"></i> ${this.files[0].name}`;
+            } else {
+                label.innerHTML = `<i class="fas fa-cloud-upload-alt"></i> Choose Image`;
+            }
+        });
+    </script>
+</body>
+</html> 
