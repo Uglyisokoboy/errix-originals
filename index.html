@@ -3,7 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Errix_Originals</title>
+  <title>Errix Originals - Handmade Footwear with Purpose</title>
+  <meta name="description" content="Handmade footwear that empowers communities. Every purchase supports girl-child education and local artisans in Nigeria.">
+  <meta name="keywords" content="handmade, footwear, Nigeria, girl-child, education, empowerment, sandals, shoes, Errix Originals">
+  <!-- Open Graph -->
+  <meta property="og:title" content="Errix Originals - Handmade Footwear with Purpose">
+  <meta property="og:description" content="Handmade footwear that empowers communities. Every purchase supports girl-child education and local artisans in Nigeria.">
+  <meta property="og:image" content="https://errixoriginals.netlify.app/path-to-your-image.jpg">
+  <meta property="og:url" content="https://errixoriginals.netlify.app/">
+  <meta property="og:type" content="website">
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Errix Originals - Handmade Footwear with Purpose">
+  <meta name="twitter:description" content="Handmade footwear that empowers communities. Every purchase supports girl-child education and local artisans in Nigeria.">
+  <meta name="twitter:image" content="https://errixoriginals.netlify.app/path-to-your-image.jpg">
   <link rel="icon" href="favicon.ico" type="image/x-icon">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -1514,7 +1527,7 @@
           div.className = 'product';
           const imgSrc = product.image && product.image.startsWith('http') ? product.image : `http://localhost:3000/uploads/${product.image}`;
           div.innerHTML = `
-            <img src="${imgSrc}" alt="${product.name}">
+            <img src="${imgSrc}" alt="${product.name}" loading="lazy">
             <h3>${product.name}</h3>
             <p>₦${product.price}</p>
             <button onclick=\"window.location.href='Order.html'\">Order Now</button>
@@ -1579,7 +1592,7 @@
           
           gallery.innerHTML = defaultCampaigns.map(campaign => `
             <div class="gallery-item">
-              <img src="${campaign.image}" alt="${campaign.caption}" class="gallery-image">
+              <img src="${campaign.image}" alt="${campaign.caption}" class="gallery-image" loading="lazy">
               <div class="gallery-overlay">
                 <div class="gallery-caption">${campaign.caption}</div>
                 <div class="gallery-description">${campaign.description}</div>
@@ -1589,7 +1602,7 @@
         } else {
           gallery.innerHTML = campaigns.map(campaign => `
             <div class="gallery-item">
-              <img src="${campaign.image}" alt="${campaign.caption}" class="gallery-image">
+              <img src="${campaign.image}" alt="${campaign.caption}" class="gallery-image" loading="lazy">
               <div class="gallery-overlay">
                 <div class="gallery-caption">${campaign.caption}</div>
                 <div class="gallery-description">${campaign.description}</div>
