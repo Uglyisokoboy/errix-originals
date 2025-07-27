@@ -518,46 +518,92 @@
   </section>
 
   <section class="products-section">
-    <div class="products-container">
-      <div class="product">
-        <img src="https://via.placeholder.com/400x400?text=Signature+Sandal" alt="Signature Sandal" />
-        <div class="product-details">
-          <h2>Signature Sandal</h2>
-          <p class="price">₦9,380</p>
-          <div class="order-form">
-            <form action="https://paystack.com/pay/yourshoplink1" method="GET" aria-label="Order Signature Sandal">
-              <label for="quantity">Quantity</label>
-              <input type="number" id="quantity" name="quantity" min="1" value="1" />
-              <button type="submit" class="btn">
-                <i class="fas fa-shopping-cart"></i>
-                Buy Now
-              </button>
-            </form>
-          </div>
-        </div>
-      </div>
-
-      <div class="divider"></div>
-
-      <div class="product">
-        <img src="https://via.placeholder.com/400x400?text=Dignity+Slide" alt="Dignity Slide" />
-        <div class="product-details">
-          <h2>Dignity Slide</h2>
-          <p class="price">₦7,500</p>
-          <div class="order-form">
-            <form action="https://paystack.com/pay/yourshoplink2" method="GET" aria-label="Order Dignity Slide">
-              <label for="quantity2">Quantity</label>
-              <input type="number" id="quantity2" name="quantity2" min="1" value="1" />
-              <button type="submit" class="btn">
-                <i class="fas fa-shopping-cart"></i>
-                Buy Now
-              </button>
-            </form>
-          </div>
-        </div>
-      </div>
+    <div class="products-container" id="cart-products">
+      <!-- Cart items will be loaded here dynamically -->
     </div>
   </section>
+
+  <script>
+    // Load cart items from localStorage
+    function loadCartItems() {
+      const cartItems = JSON.parse(localStorage.getItem('cart') || '[]');
+      const container = document.getElementById('cart-products');
+      
+      if (cartItems.length === 0) {
+        container.innerHTML = `
+          <div style="text-align: center; padding: 4rem 2rem;">
+            <h2 style="margin-bottom: 1rem; color: #888;">Your cart is empty</h2>
+            <p style="color: #666; margin-bottom: 2rem;">Please add some products to your cart first.</p>
+            <a href="products.html" class="back-btn" style="display: inline-block;">
+              <i class="fas fa-arrow-left"></i>
+              Back to Products
+            </a>
+          </div>
+        `;
+        return;
+      }
+      
+      let productsHTML = '';
+      let totalAmount = 0;
+      
+      cartItems.forEach((item, index) => {
+        const itemTotal = item.price * item.quantity;
+        totalAmount += itemTotal;
+        
+        productsHTML += `
+          <div class="product">
+            <img src="${item.image && item.image.startsWith('http') ? item.image : `https://errix-originals.onrender.com/uploads/${item.image}`}" alt="${item.name}" />
+            <div class="product-details">
+              <h2>${item.name}</h2>
+              <p class="price">₦${item.price.toLocaleString()}</p>
+              <p style="color: #888; margin-bottom: 1rem;">Quantity: ${item.quantity}</p>
+              <p style="color: #fff; font-weight: 600; margin-bottom: 1rem;">Subtotal: ₦${itemTotal.toLocaleString()}</p>
+              <div class="order-form">
+                <form action="https://paystack.com/pay/yourshoplink${index + 1}" method="GET" aria-label="Order ${item.name}">
+                  <input type="hidden" name="product_id" value="${item.id}" />
+                  <input type="hidden" name="quantity" value="${item.quantity}" />
+                  <input type="hidden" name="amount" value="${itemTotal * 100}" />
+                  <button type="submit" class="btn">
+                    <i class="fas fa-shopping-cart"></i>
+                    Buy Now - ₦${itemTotal.toLocaleString()}
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        `;
+        
+        if (index < cartItems.length - 1) {
+          productsHTML += '<div class="divider"></div>';
+        }
+      });
+      
+      // Add total summary
+      productsHTML += `
+        <div class="divider"></div>
+        <div class="product" style="text-align: center; border: 2px solid rgba(255,255,255,0.1); padding: 2rem;">
+          <div class="product-details">
+            <h2 style="color: #fff; margin-bottom: 1rem;">Order Summary</h2>
+            <p style="color: #888; margin-bottom: 0.5rem;">Total Items: ${cartItems.length}</p>
+            <p style="color: #fff; font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem;">Total Amount: ₦${totalAmount.toLocaleString()}</p>
+            <a href="cart.html" class="back-btn" style="display: inline-block; margin-right: 1rem;">
+              <i class="fas fa-arrow-left"></i>
+              Back to Cart
+            </a>
+            <a href="products.html" class="back-btn" style="display: inline-block;">
+              <i class="fas fa-shopping-bag"></i>
+              Continue Shopping
+            </a>
+          </div>
+        </div>
+      `;
+      
+      container.innerHTML = productsHTML;
+    }
+    
+    // Load cart items when page loads
+    loadCartItems();
+  </script>
 
   <footer>
     <div class="footer-container">
