@@ -26,6 +26,16 @@
       padding: 0;
       box-sizing: border-box;
     }
+    
+    @keyframes slideIn {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+    
+    @keyframes slideOut {
+      from { transform: translateX(0); opacity: 1; }
+      to { transform: translateX(100%); opacity: 0; }
+    }
 
     body {
       font-family: 'Montserrat', sans-serif;
@@ -1317,11 +1327,15 @@
     <div class="header-container">
       <a href="#" class="logo">Errix <span>Originals</span></a>
       <nav aria-label="Main navigation">
-        <a href="#shop">Shop</a>
+        <a href="products.html">Shop</a>
         <a href="#about">About</a>
         <a href="#projects">Projects</a>
         <a href="#donate">Donate</a>
         <a href="#contact">Contact</a>
+        <a href="cart.html" style="position: relative; color: #fff; text-decoration: none; font-weight: 500; font-size: 14px; transition: color 0.2s; display: flex; align-items: center; gap: 8px;">
+          Cart
+          <div id="cart-indicator" style="display: none; position: absolute; top: -8px; right: -8px; background: linear-gradient(135deg, #ff6b6b 0%, #ff5252 100%); color: #fff; border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; box-shadow: 0 2px 8px rgba(255, 107, 107, 0.4);"></div>
+        </a>
         <a href="my-account.html" class="account-link">My Account</a>
       </nav>
     </div>
@@ -1331,6 +1345,7 @@
     <div class="hero-content">
       <h1>Step Into Impact</h1>
       <p>Our handmade footwear does more than walk — it speaks, empowers, and uplifts. Every pair purchased fuels dignity, education, and purpose.</p>
+      
       <a href="products.html" class="cta">
         <span>Explore Our Collection</span>
         <i class="fas fa-arrow-right"></i>
@@ -1341,6 +1356,12 @@
   <section id="shop-section">
     <h2>Shop Our Signature Styles</h2>
     <div class="shop" id="shop"></div>
+    <div style="text-align: center; margin-top: 40px;">
+      <a href="products.html" class="cta">
+        <span>Explore Our Collection</span>
+        <i class="fas fa-arrow-right"></i>
+      </a>
+    </div>
   </section>
 
   <section id="about" class="about">
@@ -1386,12 +1407,49 @@
   <section id="projects" class="projects">
     <div class="projects-container">
       <h2>Our Projects</h2>
+      
+      <!-- Countdown Timer -->
+      <div id="countdown-timer" style="
+        background: linear-gradient(90deg, #111 0%, #222 100%);
+        border-radius: 16px;
+        padding: 2rem 2.5rem;
+        margin: 2rem 0 3rem 0;
+        text-align: center;
+        color: #fff;
+        box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1.2rem;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+      ">
+        <div style="display: flex; align-items: center; gap: 12px; justify-content: center;">
+          <span style="font-size: 28px; display: flex; align-items: center; justify-content: center;">
+            <i class="fas fa-calendar-alt" style="margin-right: 10px; color: #fff; opacity: 0.85;"></i>
+          </span>
+          <span style="font-weight: 700; font-size: 20px; letter-spacing: 1px; color: #fff;">
+            Countdown to International Day of the Girl Child
+          </span>
+        </div>
+        <div id="countdown-display" style="display: flex; gap: 18px; justify-content: center; align-items: center;">
+          <!-- Countdown will be populated by JavaScript -->
+        </div>
+        <div style="font-size: 15px; color: #aaa; margin-top: 8px; letter-spacing: 1px;">
+          October 11, 2025
+        </div>
+      </div>
+      
       <div class="project-card">
         <div class="project-icon">
           <i class="fas fa-heart"></i>
         </div>
         <div class="project-content">
           <h3>Sole to Soul — Girl Child Edition</h3>
+          <div style="background: rgba(255, 193, 7, 0.2); color: #ffc107; padding: 0.5rem 1rem; border-radius: 8px; display: inline-block; margin-bottom: 1rem; font-weight: 600; font-size: 0.9rem;">
+            <i class="fas fa-clock" style="margin-right: 0.5rem;"></i>Upcoming Project
+          </div>
           <p>A flagship project delivering dignity kits and sandals to schoolgirls across public schools. We collaborate with local artisans, community leaders, and organizations to restore pride one sole at a time.</p>
           <div class="project-stats">
             <div class="stat">
@@ -1491,7 +1549,7 @@
         <div class="footer-links">
           <div class="footer-section">
             <h4>Quick Links</h4>
-            <a href="#shop">Shop</a>
+            <a href="products.html">Shop</a>
             <a href="#about">About</a>
             <a href="#projects">Projects</a>
             <a href="#donate">Donate</a>
@@ -1511,9 +1569,60 @@
   </footer>
 
   <script>
+    // Cart functionality
+    let cartItems = JSON.parse(localStorage.getItem('cart') || '[]');
+    
+    function updateCartIndicator() {
+      const indicator = document.getElementById('cart-indicator');
+      const itemCount = cartItems.reduce((total, item) => total + item.quantity, 0);
+      
+      if (itemCount > 0) {
+        indicator.style.display = 'flex';
+        indicator.textContent = itemCount > 99 ? '99+' : itemCount;
+      } else {
+        indicator.style.display = 'none';
+      }
+    }
+    
+    function addToCart(product) {
+      const existing = cartItems.find(item => item.id === product.id);
+      if (existing) {
+        existing.quantity += 1;
+      } else {
+        cartItems.push({ ...product, quantity: 1 });
+      }
+      localStorage.setItem('cart', JSON.stringify(cartItems));
+      updateCartIndicator();
+      
+      // Show toast notification
+      showToast(`${product.name} added to cart!`);
+    }
+    
+    function showToast(message) {
+      const toast = document.createElement('div');
+      toast.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: #333;
+        color: white;
+        padding: 12px 20px;
+        border-radius: 8px;
+        z-index: 10000;
+        animation: slideIn 0.3s ease;
+      `;
+      toast.textContent = message;
+      document.body.appendChild(toast);
+      
+      setTimeout(() => {
+        toast.style.animation = 'slideOut 0.3s ease';
+        setTimeout(() => document.body.removeChild(toast), 300);
+      }, 2000);
+    }
+    
     async function loadProducts() {
       const shop = document.getElementById('shop');
-      shop.innerHTML = '<p>Loading...</p>';
+      shop.innerHTML = '<div class="loading">Loading products...</div>';
       try {
         const res = await fetch('https://errix-originals.onrender.com/api/products');
         const products = await res.json();
@@ -1522,16 +1631,45 @@
           return;
         }
         shop.innerHTML = '';
-        products.forEach(product => {
+        products.slice(0, 4).forEach(product => {
           const div = document.createElement('div');
           div.className = 'product';
-          const imgSrc = product.image && product.image.startsWith('http') ? product.image : `http://localhost:3000/uploads/${product.image}`;
-          div.innerHTML = `
-            <img src="${imgSrc}" alt="${product.name}" loading="lazy">
-            <h3>${product.name}</h3>
-            <p>₦${product.price}</p>
-            <button onclick=\"window.location.href='Order.html'\">Order Now</button>
+          div.style.cssText = `
+            background: rgba(25, 25, 25, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
           `;
+          
+          const imgSrc = product.image && product.image.startsWith('http') ? product.image : `https://errix-originals.onrender.com/uploads/${product.image}`;
+          
+          div.innerHTML = `
+            <div style="position: relative; margin-bottom: 20px; border-radius: 16px; overflow: hidden;">
+              <a href="product-detail.html?id=${product.id}" style="text-decoration: none; color: inherit;">
+                <img src="${imgSrc}" alt="${product.name}" loading="lazy" style="width: 100%; height: 280px; object-fit: cover; border-radius: 16px; display: block; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);">
+              </a>
+            </div>
+            <div style="position: relative; z-index: 2;">
+              <a href="product-detail.html?id=${product.id}" style="text-decoration: none; color: inherit;">
+                <h3 style="font-size: 20px; font-weight: 600; color: #fff; margin: 0 0 8px 0; line-height: 1.3; cursor: pointer;">${product.name}</h3>
+              </a>
+              ${product.description ? `<p style="font-size: 14px; color: #888; margin: 0 0 16px 0; line-height: 1.5;">${product.description}</p>` : ''}
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
+                <div style="font-size: 24px; font-weight: 700; color: #fff; letter-spacing: -0.02em;">₦${product.price?.toLocaleString()}</div>
+                <div style="font-size: 12px; color: #666; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px;">In Stock</div>
+              </div>
+              <button onclick="addToCart(${JSON.stringify(product).replace(/"/g, '&quot;')})" style="width: 100%; background: linear-gradient(135deg, #fff 0%, #ccc 100%); color: #000; border: none; border-radius: 12px; padding: 14px 20px; font-size: 16px; font-weight: 600; cursor: pointer; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);">
+                <i class="fas fa-shopping-cart" style="font-size: 16px;"></i>
+                Add to Cart
+              </button>
+            </div>
+          `;
+          
           shop.appendChild(div);
         });
       } catch (err) {
@@ -1618,6 +1756,71 @@
     
     // Initialize gallery
     loadCampaignGallery();
+    
+    // Initialize cart indicator
+    updateCartIndicator();
+    
+    // Countdown Timer Functionality
+    function updateCountdown() {
+      const targetDate = new Date('2025-10-11T00:00:00');
+      const now = new Date();
+      const difference = targetDate.getTime() - now.getTime();
+      
+      if (difference > 0) {
+        const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((difference / (1000 * 60 * 60)) % 24);
+        const minutes = Math.floor((difference / 1000 / 60) % 60);
+        const seconds = Math.floor((difference / 1000) % 60);
+        
+        const countdownDisplay = document.getElementById('countdown-display');
+        if (countdownDisplay) {
+          countdownDisplay.innerHTML = [
+            { label: 'Days', value: days },
+            { label: 'Hours', value: hours },
+            { label: 'Minutes', value: minutes },
+            { label: 'Seconds', value: seconds },
+          ].map((unit, idx) => `
+            <div style="
+              background: #181818;
+              border-radius: 10px;
+              min-width: 70px;
+              padding: 1rem 0.5rem;
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+              border: 1px solid #222;
+              margin-left: ${idx === 0 ? 0 : 0}px;
+            ">
+              <span style="font-size: 32px; font-weight: 800; color: #fff; letter-spacing: 1px;">${unit.value.toString().padStart(2, '0')}</span>
+              <span style="font-size: 13px; color: #bbb; font-weight: 500; margin-top: 4px; letter-spacing: 1px;">${unit.label}</span>
+            </div>
+          `).join('');
+        }
+      } else {
+        const countdownDisplay = document.getElementById('countdown-display');
+        if (countdownDisplay) {
+          countdownDisplay.innerHTML = `
+            <div style="
+              background: #181818;
+              border-radius: 10px;
+              padding: 1rem 2rem;
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+              border: 1px solid #222;
+            ">
+              <span style="font-size: 24px; font-weight: 800; color: #fff; letter-spacing: 1px;">EVENT STARTED</span>
+            </div>
+          `;
+        }
+      }
+    }
+    
+    // Initialize countdown timer
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
   </script>
 
 </body>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Dashboard - Errix Originals</title>
+  <style>
+    body { font-family: 'Montserrat', sans-serif; background: #f9f9f9; color: #222; margin: 0; }
+    .container { max-width: 500px; margin: 4rem auto; background: #fff; border-radius: 12px; box-shadow: 0 4px 16px rgba(0,0,0,0.07); padding: 2.5rem 2rem; text-align: center; }
+    h1 { font-size: 2rem; margin-bottom: 1rem; }
+    .welcome { font-size: 1.1rem; margin-bottom: 2rem; }
+    button { background: #000; color: #fff; border: none; border-radius: 6px; padding: 0.8rem 2rem; font-size: 1rem; font-weight: 600; cursor: pointer; transition: background 0.3s; }
+    button:hover { background: #333; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>User Dashboard</h1>
+    <div class="welcome" id="welcomeMsg">Welcome!</div>
+    <button onclick="logout()">Logout</button>
+  </div>
+  <script>
+    // User role check
+    (function() {
+      const token = localStorage.getItem('token');
+      const user = JSON.parse(localStorage.getItem('user') || 'null');
+      if (!token || !user || user.role !== 'user') {
+        window.location.href = 'my-account.html';
+      } else {
+        document.getElementById('welcomeMsg').textContent = `Welcome, ${user.email}!`;
+      }
+    })();
+    function logout() {
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      window.location.href = 'my-account.html';
+    }
+  </script>
+</body>
+</html> 

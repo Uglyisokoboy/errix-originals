@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shopping Cart - Errix Originals</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: linear-gradient(135deg, #000000 0%, #1a1a1a 50%, #000000 100%);
+      color: #ffffff;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .header h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .cart-container {
+      background: rgba(25, 25, 25, 0.95);
+      backdrop-filter: blur(20px);
+      border-radius: 24px;
+      padding: 2rem;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .cart-empty {
+      text-align: center;
+      padding: 4rem 2rem;
+    }
+
+    .cart-empty h2 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: #888;
+    }
+
+    .cart-empty p {
+      color: #666;
+      margin-bottom: 2rem;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #fff 0%, #ccc 100%);
+      color: #000;
+      border: none;
+      border-radius: 12px;
+      padding: 12px 24px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: all 0.2s;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    .cart-items {
+      margin-bottom: 2rem;
+    }
+
+    .cart-item {
+      display: flex;
+      align-items: center;
+      padding: 1.5rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      gap: 1.5rem;
+    }
+
+    .cart-item:last-child {
+      border-bottom: none;
+    }
+
+    .item-image {
+      width: 100px;
+      height: 100px;
+      border-radius: 12px;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+
+    .item-details {
+      flex: 1;
+    }
+
+    .item-name {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .item-price {
+      font-size: 1.1rem;
+      color: #ccc;
+      margin-bottom: 0.5rem;
+    }
+
+    .quantity-controls {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .quantity-btn {
+      background: rgba(255, 255, 255, 0.1);
+      border: none;
+      color: #fff;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+
+    .quantity-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .quantity-display {
+      font-size: 1.1rem;
+      font-weight: 600;
+      min-width: 40px;
+      text-align: center;
+    }
+
+    .item-total {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .remove-btn {
+      background: rgba(255, 107, 107, 0.2);
+      border: none;
+      color: #ff6b6b;
+      padding: 8px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .remove-btn:hover {
+      background: rgba(255, 107, 107, 0.3);
+    }
+
+    .cart-summary {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+      padding: 2rem;
+      margin-top: 2rem;
+    }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+      font-size: 1.1rem;
+    }
+
+    .summary-row.total {
+      font-size: 1.3rem;
+      font-weight: 700;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding-top: 1rem;
+      margin-top: 1rem;
+    }
+
+    .checkout-btn {
+      width: 100%;
+      background: linear-gradient(135deg, #ff6b6b 0%, #ff5252 100%);
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      padding: 16px 24px;
+      font-size: 1.2rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 1.5rem;
+      transition: all 0.2s;
+    }
+
+    .checkout-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-bottom: 2rem;
+      color: #ccc;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .back-link:hover {
+      color: #fff;
+    }
+
+    @media (max-width: 768px) {
+      .cart-item {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+      }
+
+      .item-image {
+        width: 120px;
+        height: 120px;
+      }
+
+      .quantity-controls {
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="index.html" class="back-link">
+      <i class="fas fa-arrow-left"></i> Back to Home
+    </a>
+
+    <div class="header">
+      <h1>Shopping Cart</h1>
+    </div>
+
+    <div class="cart-container">
+      <div id="cart-content">
+        <!-- Cart content will be populated by JavaScript -->
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let cartItems = JSON.parse(localStorage.getItem('cart') || '[]');
+
+    function updateCart() {
+      const cartContent = document.getElementById('cart-content');
+      
+      if (cartItems.length === 0) {
+        cartContent.innerHTML = `
+          <div class="cart-empty">
+            <h2>Your cart is empty</h2>
+            <p>Looks like you haven't added any items to your cart yet.</p>
+            <a href="products.html" class="btn-primary">Continue Shopping</a>
+          </div>
+        `;
+        return;
+      }
+
+      const total = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+      const shippingThreshold = 30000;
+      const shippingCost = total >= shippingThreshold ? 0 : 1500;
+      const finalTotal = total + shippingCost;
+      
+      cartContent.innerHTML = `
+        <div class="cart-items">
+          ${cartItems.map(item => `
+            <div class="cart-item">
+              <img src="${item.image && item.image.startsWith('http') ? item.image : `https://errix-originals.onrender.com/uploads/${item.image}`}" alt="${item.name}" class="item-image">
+              <div class="item-details">
+                <div class="item-name">${item.name}</div>
+                <div class="item-price">₦${item.price.toLocaleString()}</div>
+                <div class="quantity-controls">
+                  <button class="quantity-btn" onclick="updateQuantity(${item.id}, ${item.quantity - 1})">-</button>
+                  <span class="quantity-display">${item.quantity}</span>
+                  <button class="quantity-btn" onclick="updateQuantity(${item.id}, ${item.quantity + 1})">+</button>
+                </div>
+              </div>
+              <div class="item-total">₦${(item.price * item.quantity).toLocaleString()}</div>
+              <button class="remove-btn" onclick="removeItem(${item.id})">
+                <i class="fas fa-trash"></i>
+              </button>
+            </div>
+          `).join('')}
+        </div>
+        <div class="cart-summary">
+          <div class="summary-row">
+            <span>Subtotal:</span>
+            <span>₦${total.toLocaleString()}</span>
+          </div>
+          <div class="summary-row">
+            <span>Shipping:</span>
+            <span>${shippingCost === 0 ? 'Free' : `₦${shippingCost.toLocaleString()}`}</span>
+          </div>
+          ${total < shippingThreshold ? `<div class="summary-row" style="font-size: 14px; color: #ff6b6b;">
+            <span>Add ₦${(shippingThreshold - total).toLocaleString()} more for free shipping!</span>
+          </div>` : ''}
+          <div class="summary-row total">
+            <span>Total:</span>
+            <span>₦${finalTotal.toLocaleString()}</span>
+          </div>
+          <button class="checkout-btn" onclick="checkout()">
+            Proceed to Checkout
+          </button>
+        </div>
+      `;
+    }
+
+    function updateQuantity(id, newQuantity) {
+      if (newQuantity <= 0) {
+        removeItem(id);
+        return;
+      }
+      
+      cartItems = cartItems.map(item => 
+        item.id === id ? { ...item, quantity: newQuantity } : item
+      );
+      
+      localStorage.setItem('cart', JSON.stringify(cartItems));
+      updateCart();
+    }
+
+    function removeItem(id) {
+      cartItems = cartItems.filter(item => item.id !== id);
+      localStorage.setItem('cart', JSON.stringify(cartItems));
+      updateCart();
+    }
+
+    function checkout() {
+      // Redirect to Order.html with cart data
+      window.location.href = 'Order.html';
+    }
+
+    // Initialize cart
+    updateCart();
+  </script>
+</body>
+</html> 

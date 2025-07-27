@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard - Errix Originals</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: linear-gradient(135deg, #000000 0%, #1a1a1a 50%, #000000 100%);
+      color: #ffffff;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    .header {
+      background: rgba(0, 0, 0, 0.95);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 1.5rem 0;
+    }
+
+    .header-content {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .brand-icon {
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(135deg, #fff 0%, #ccc 100%);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #000;
+      font-size: 1.5rem;
+    }
+
+    .brand-text h1 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+    }
+
+    .brand-text p {
+      color: #ccc;
+      font-size: 0.9rem;
+    }
+
+    .logout-btn {
+      background: rgba(255, 107, 107, 0.2);
+      border: none;
+      color: #ff6b6b;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .logout-btn:hover {
+      background: rgba(255, 107, 107, 0.3);
+    }
+
+    .main-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .page-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .page-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .page-subtitle {
+      color: #ccc;
+      font-size: 1.1rem;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      margin-bottom: 4rem;
+    }
+
+    .stat-card {
+      background: rgba(25, 25, 25, 0.95);
+      backdrop-filter: blur(20px);
+      border-radius: 16px;
+      padding: 2rem;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      text-align: center;
+      transition: all 0.3s;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .stat-icon {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, #fff 0%, #ccc 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1rem;
+      color: #000;
+      font-size: 1.5rem;
+    }
+
+    .stat-number {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-label {
+      color: #ccc;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .nav-section {
+      margin-top: 3rem;
+    }
+
+    .section-header {
+      margin-bottom: 2rem;
+    }
+
+    .section-title {
+      font-size: 1.8rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .nav-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .nav-card {
+      background: rgba(25, 25, 25, 0.95);
+      backdrop-filter: blur(20px);
+      border-radius: 16px;
+      padding: 2rem;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .nav-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+      border-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .nav-icon {
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(135deg, #fff 0%, #ccc 100%);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #000;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+
+    .nav-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+    }
+
+    @media (max-width: 768px) {
+      .header-content {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+      }
+
+      .stats-grid {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+      }
+
+      .nav-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .page-title {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-content">
+      <div class="brand">
+        <div class="brand-icon">
+          <i class="fas fa-shoe-prints"></i>
+        </div>
+        <div class="brand-text">
+          <h1>Errix Originals</h1>
+          <p>Admin Dashboard</p>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button class="logout-btn" onclick="logout()">
+          <i class="fas fa-sign-out-alt"></i> Logout
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-container">
+    <div class="page-header">
+      <div class="page-title">Dashboard</div>
+      <div class="page-subtitle">Welcome! Manage products, campaigns, and view impact stats.</div>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon">
+          <i class="fas fa-box"></i>
+        </div>
+        <div class="stat-number" id="products-count">6</div>
+        <div class="stat-label">Products</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">
+          <i class="fas fa-bullhorn"></i>
+        </div>
+        <div class="stat-number" id="campaigns-count">3</div>
+        <div class="stat-label">Campaigns</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">
+          <i class="fas fa-users"></i>
+        </div>
+        <div class="stat-number">500+</div>
+        <div class="stat-label">Girls Empowered</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">
+          <i class="fas fa-school"></i>
+        </div>
+        <div class="stat-number">25</div>
+        <div class="stat-label">Schools Reached</div>
+      </div>
+    </div>
+
+    <section class="nav-section">
+      <div class="section-header">
+        <div class="section-title">Quick Navigation</div>
+      </div>
+      <div class="nav-grid">
+        <a class="nav-card" href="edit-products.html">
+          <div class="nav-icon">
+            <i class="fas fa-box"></i>
+          </div>
+          <div class="nav-title">Manage Products</div>
+        </a>
+        <a class="nav-card" href="manage-campaigns.html">
+          <div class="nav-icon">
+            <i class="fas fa-bullhorn"></i>
+          </div>
+          <div class="nav-title">Manage Campaigns</div>
+        </a>
+        <a class="nav-card" href="my-account.html">
+          <div class="nav-icon">
+            <i class="fas fa-user"></i>
+          </div>
+          <div class="nav-title">My Account</div>
+        </a>
+        <a class="nav-card" href="add-product.html">
+          <div class="nav-icon">
+            <i class="fas fa-plus"></i>
+          </div>
+          <div class="nav-title">Add New Product</div>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // Check admin authentication
+    function checkAuth() {
+      const token = localStorage.getItem('token');
+      const user = localStorage.getItem('user');
+      
+      if (!token || !user) {
+        window.location.href = 'admin-login.html';
+        return;
+      }
+      
+      try {
+        const userData = JSON.parse(user);
+        if (userData.role !== 'admin') {
+          window.location.href = 'admin-login.html';
+          return;
+        }
+      } catch (err) {
+        window.location.href = 'admin-login.html';
+        return;
+      }
+    }
+
+    function logout() {
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      window.location.href = 'admin-login.html';
+    }
+
+    async function loadStats() {
+      try {
+        // Load products count
+        const productsRes = await fetch('https://errix-originals.onrender.com/api/products');
+        const products = await productsRes.json();
+        document.getElementById('products-count').textContent = products.length;
+
+        // Load campaigns count
+        const campaignsRes = await fetch('https://errix-originals.onrender.com/api/campaigns');
+        const campaigns = await campaignsRes.json();
+        document.getElementById('campaigns-count').textContent = campaigns.length;
+      } catch (error) {
+        console.error('Error loading stats:', error);
+      }
+    }
+
+    // Initialize dashboard
+    checkAuth();
+    loadStats();
+  </script>
+</body>
+</html> 

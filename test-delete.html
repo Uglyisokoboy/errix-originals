@@ -14,7 +14,7 @@
     <script>
         async function testGet() {
             try {
-                const response = await fetch('http://localhost:3000/api/products');
+                const response = await fetch('https://errix-originals.onrender.com/api/products');
                 const products = await response.json();
                 document.getElementById('result').innerHTML = '<pre>' + JSON.stringify(products, null, 2) + '</pre>';
             } catch (error) {
@@ -25,7 +25,7 @@
         async function testDelete() {
             try {
                 console.log('Testing delete...');
-                const response = await fetch('http://localhost:3000/api/products/1', {
+                const response = await fetch('https://errix-originals.onrender.com/api/products/1', {
                     method: 'DELETE'
                 });
                 console.log('Response status:', response.status);
