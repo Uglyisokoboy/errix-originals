@@ -276,17 +276,20 @@ app.get('/api/products', (req, res) => {
 });
 
 // POST new product
-app.post('/api/products', upload.single('image'), (req, res) => {
+app.post('/api/products', upload.array('images', 5), (req, res) => {
   console.log('POST /api/products - Creating new product');
   
-  if (!req.file) {
-    return res.json({ success: false, error: 'Image required' });
+  if (!req.files || req.files.length === 0) {
+    return res.json({ success: false, error: 'At least one image required' });
   }
   
-  const { name, price, description } = req.body;
+  const { name, price, description, category, status, mainImageIndex } = req.body;
   if (!name || !price) {
     return res.json({ success: false, error: 'Name and price required' });
   }
+  
+  // Convert uploaded files to image URLs
+  const imageUrls = req.files.map(file => `https://errix-originals.onrender.com/uploads/${file.filename}`);
   
   const newId = Math.max(...products.map(p => p.id)) + 1;
   const product = {
@@ -294,7 +297,11 @@ app.post('/api/products', upload.single('image'), (req, res) => {
     name,
     price: parseFloat(price),
     description: description || '',
-    image: req.file.filename
+    category: category || 'Shoes',
+    status: status || 'Active',
+    images: imageUrls,
+    mainImageIndex: parseInt(mainImageIndex) || 0,
+    image: imageUrls[0] // Main image for backward compatibility
   };
   
   products.push(product);
@@ -304,7 +311,7 @@ app.post('/api/products', upload.single('image'), (req, res) => {
 });
 
 // PUT update product
-app.put('/api/products/:id', upload.single('image'), (req, res) => {
+app.put('/api/products/:id', upload.array('images', 5), (req, res) => {
   const id = parseInt(req.params.id);
   console.log('PUT /api/products/' + id + ' - Updating product');
   
@@ -313,7 +320,7 @@ app.put('/api/products/:id', upload.single('image'), (req, res) => {
     return res.json({ success: false, error: 'Product not found' });
   }
   
-  const { name, price, description } = req.body;
+  const { name, price, description, category, status, mainImageIndex, removeAllImages } = req.body;
   if (!name || !price) {
     return res.json({ success: false, error: 'Name and price required' });
   }
@@ -323,12 +330,34 @@ app.put('/api/products/:id', upload.single('image'), (req, res) => {
     ...products[productIndex],
     name,
     price: parseFloat(price),
-    description: description || ''
+    description: description || '',
+    category: category || 'Shoes',
+    status: status || 'Active'
   };
   
-  // Update image if new one provided
-  if (req.file) {
-    products[productIndex].image = req.file.filename;
+  // Handle multiple images
+  if (req.files && req.files.length > 0) {
+    // Convert uploaded files to image URLs
+    const imageUrls = req.files.map(file => `https://errix-originals.onrender.com/uploads/${file.filename}`);
+    
+    // If product already has images, append new ones (up to 5 total)
+    const existingImages = products[productIndex].images || [];
+    const newImages = [...existingImages, ...imageUrls].slice(0, 5);
+    
+    products[productIndex].images = newImages;
+    products[productIndex].mainImageIndex = parseInt(mainImageIndex) || 0;
+    
+    // Keep the main image as the primary image for backward compatibility
+    if (newImages.length > 0) {
+      products[productIndex].image = newImages[products[productIndex].mainImageIndex || 0];
+    }
+  }
+  
+  // Handle image removal
+  if (removeAllImages === 'true') {
+    products[productIndex].images = [];
+    products[productIndex].mainImageIndex = 0;
+    products[productIndex].image = '';
   }
   
   console.log('Updated product:', products[productIndex]);
